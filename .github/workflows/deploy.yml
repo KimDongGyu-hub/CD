@@ -17,13 +17,13 @@ jobs :
     runs-on : ubuntu-latest
     # 실행 단계
     steps :
-    -name : checkout repository
+    - name : checkout repository
      # 깃허브에서 실행한 환경으로 코드 내려받기
      uses : actions/checkout@v3
      
-    -name : install lftp
+    - name : install lftp
      # ftp업로드에 필요한 프로그램 설치
      run : sudo apt-get install -y lftp
-    -name : Upload files via FTP
+    - name : Upload files via FTP
      run:
        lftp -u ftp -u ${{ secrets.SFTP_USER }},${{ secrets.SFTP_PASSWORD }} -e "set ftp:ssl-allow no; mirror -R ./ /html/cms; bye" ftp://${{ secrets.SFTP_HOST }}:${{ secrets.SFTP_PORT }}
